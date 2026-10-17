@@ -2,6 +2,22 @@
 const revealButton = document.querySelector('#reveal-button');
 const hiddenMessage = document.querySelector('#hidden-message');
 const confettiLayer = document.querySelector('#confetti-layer');
+const openButton = document.querySelector('#open-surprise');
+const songButton = document.querySelector('#song-button');
+const songSection = document.querySelector('.song-section');
+let audioContext;
+let songTimer;
+let songStep = 0;
+
+// The opening click is the visitor's gesture that lets browsers start the tune.
+openButton.addEventListener('click', () => {
+  document.body.classList.remove('locked');
+  document.body.classList.add('is-open');
+  startSong();
+  window.setTimeout(() => {
+    document.querySelector('#apology').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+});
 
 // Reveal the note and add a tiny burst of hearts/sparkles. Click again to tuck it away.
 revealButton.addEventListener('click', () => {
@@ -33,12 +49,7 @@ document.querySelectorAll('.photo-frame img').forEach((photo) => {
   if (photo.complete && photo.naturalWidth === 0) showFallback();
 });
 
-// A tiny original melody made with Web Audio, so the site needs no music file or service.
-const songButton = document.querySelector('#song-button');
-const songSection = document.querySelector('.song-section');
-let audioContext;
-let songTimer;
-let songStep = 0;
+// A tiny original melody made with Web Audio, so it works without a hosted music file.
 
 // Note frequencies for a gentle little major-key loop.
 const tune = [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 523.25, 392.00];
@@ -64,6 +75,18 @@ function playNextNote() {
   songTimer = window.setTimeout(playNextNote, 390);
 }
 
+async function startSong() {
+  if (songTimer) return;
+  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContextClass) return;
+  audioContext ??= new AudioContextClass();
+  await audioContext.resume();
+  songButton.textContent = '■ Pause the tiny song';
+  songButton.setAttribute('aria-pressed', 'true');
+  songSection.classList.add('is-playing');
+  playNextNote();
+}
+
 songButton.addEventListener('click', async () => {
   if (songTimer) {
     window.clearTimeout(songTimer);
@@ -74,16 +97,10 @@ songButton.addEventListener('click', async () => {
     return;
   }
 
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) {
+  if (!(window.AudioContext || window.webkitAudioContext)) {
     songButton.textContent = 'Song unavailable in this browser';
     songButton.disabled = true;
     return;
   }
-  audioContext ??= new AudioContextClass();
-  await audioContext.resume();
-  songButton.textContent = '■ Pause the tiny song';
-  songButton.setAttribute('aria-pressed', 'true');
-  songSection.classList.add('is-playing');
-  playNextNote();
+  await startSong();
 });
