@@ -20,6 +20,10 @@ a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
 button:focus-visible, a:focus-visible { outline: 3px solid #ab83cb; outline-offset: 4px; }
 .page-wrap { width: min(100% - 32px, 960px); margin: 0 auto; overflow: hidden; }
+/* Start with just the cover visible; the opening click reveals the whole letter. */
+body.locked .top-note,
+body.locked main > section:not(.hero),
+body.locked .footer-note { display: none; }
 .top-note { display: flex; justify-content: center; align-items: center; gap: 10px; padding: 14px 8px 5px; color: var(--muted); font: 15px var(--hand); transform: rotate(-1deg); }
 .tiny-heart { color: var(--pink-deep); font-size: 13px; }
 .paper { background: var(--paper); border: 1px solid #f1e5df; box-shadow: 3px 5px 0 #eddfe2, 0 12px 30px #9874830d; }
@@ -101,7 +105,9 @@ h1 { margin: 0; font-size: clamp(43px, 9vw, 76px); color: #574452; }
 .final-heart { position: absolute; top: 17px; right: 23px; color: #d87b99; font: 33px var(--hand); transform: rotate(12deg); }
 .footer-note { padding: 0 8px 23px; text-align: center; color: var(--muted); font: 15px var(--hand); }
 .footer-note span { color: var(--pink-deep); }
+body.is-open main > section:not(.hero) { animation: soft-arrive .45s ease both; }
 @keyframes pop-in { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes soft-arrive { from { opacity: 0; } to { opacity: 1; } }
 @keyframes float-out { 0% { transform: translate(-50%, -50%) scale(.4); opacity: 0; } 15% { opacity: 1; } 100% { transform: translate(var(--x), var(--y)) rotate(var(--turn)) scale(1); opacity: 0; } }
 @keyframes bob { to { transform: translateY(-5px) rotate(-7deg); } }
 
