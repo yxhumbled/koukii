@@ -95,6 +95,7 @@ h1 { margin: 0; font-size: clamp(43px, 9vw, 76px); color: #574452; }
 .song-section h2 { margin: 0; font: 700 clamp(23px, 4vw, 31px)/1.2 var(--hand); }
 .song-section .eyebrow { margin-bottom: 2px; }
 .song-caption { margin: 5px 0 0; color: var(--muted); font-size: 14px; }
+.song-section audio { width: min(100%, 320px); min-width: 0; flex: 0 1 320px; }
 .music-note { position: absolute; top: -15px; right: 24px; color: #a389c5; font: 32px var(--hand); transform: rotate(10deg); }
 .song-section.is-playing .music-note { animation: bob 700ms ease-in-out infinite alternate; }
 .final-section { margin: 0 auto 50px; }
@@ -127,7 +128,7 @@ body.is-open main > section:not(.hero) { animation: soft-arrive .45s ease both; 
   .photo-two, .photo-four { margin-top: 18px; }
   .love-list p { padding-right: 52px; }
   .song-section { flex-direction: column; align-items: flex-start; padding: 24px 20px; }
-  .song-section .button { align-self: flex-start; }
+  .song-section audio { width: 100%; flex-basis: auto; }
 }
 @media (max-width: 390px) {
   .top-note { font-size: 13px; }

@@ -129,11 +129,13 @@
         <div>
           <p class="eyebrow">a little song for you</p>
           <h2 id="song-title">Picked this one for you</h2>
-          <p class="song-caption" id="song-caption">Press “Open your surprise” to play it 🎶</p>
+          <p class="song-caption" id="song-caption">Press “Open your surprise” to start it, or tap play here if it stays quiet 🎶</p>
         </div>
-        <button class="button button-pink" id="song-button" type="button" aria-pressed="false">▶ Play the tiny song</button>
         <!-- Replace hmm.mp3 with your own file if you want to change the song. -->
-        <audio id="birthday-song" preload="metadata" src="hmm.mp3"></audio>
+        <audio id="birthday-song" preload="metadata" controls aria-label="Play the birthday song">
+          <source src="hmm.mp3" type="audio/mpeg">
+          Your browser cannot play this audio. <a href="hmm.mp3">Open the MP3 directly</a>.
+        </audio>
       </section>
 
       <section class="final-section" id="last-note" aria-labelledby="final-title">

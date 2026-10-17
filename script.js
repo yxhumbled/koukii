@@ -3,14 +3,11 @@ const revealButton = document.querySelector('#reveal-button');
 const hiddenMessage = document.querySelector('#hidden-message');
 const confettiLayer = document.querySelector('#confetti-layer');
 const openButton = document.querySelector('#open-surprise');
-const songButton = document.querySelector('#song-button');
 const songSection = document.querySelector('.song-section');
 const birthdaySong = document.querySelector('#birthday-song');
 const songCaption = document.querySelector('#song-caption');
 
 function updateSongState(isPlaying) {
-  songButton.textContent = isPlaying ? '■ Pause the song' : '▶ Play the song';
-  songButton.setAttribute('aria-pressed', String(isPlaying));
   songSection.classList.toggle('is-playing', isPlaying);
 }
 
@@ -20,9 +17,9 @@ async function startSong() {
     updateSongState(true);
     songCaption.textContent = 'A little soundtrack for your surprise 🎶';
   } catch (error) {
-    // Some browsers still require a direct tap on the song button to allow playback.
+    // Some browsers still require a direct tap on the visible audio player's play control.
     updateSongState(false);
-    songCaption.textContent = 'Tap the song button if it didn’t start 🎶';
+    songCaption.textContent = 'Tap play in the little audio player if it didn’t start 🎶';
   }
 }
 
@@ -42,14 +39,6 @@ birthdaySong.addEventListener('pause', () => updateSongState(false));
 birthdaySong.addEventListener('ended', () => {
   updateSongState(false);
   songCaption.textContent = 'That was the song I picked for you 💗';
-});
-
-songButton.addEventListener('click', async () => {
-  if (birthdaySong.paused) {
-    await startSong();
-  } else {
-    birthdaySong.pause();
-  }
 });
 
 // Reveal the note and add a tiny burst of hearts/sparkles. Click again to tuck it away.

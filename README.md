@@ -13,7 +13,7 @@ Put your own `.jpg` photos in the `images/` folder using these exact names (lowe
 
 The `images/` folder includes this note. The gallery only has spots for general photos of you two; there are no trip or bus-day photo slots. Replace the filenames in the matching `<img src="...">` in `index.html` if you prefer different names. Keep the image paths relative (for example, `images/us-1.jpg`) so they work both locally and on GitHub Pages. If you do not add photos yet, friendly placeholders appear in their spots.
 
-The song file is `hmm.mp3`. It starts when Kinda clicks **Open your surprise**, and the song button can pause or play it again. Browsers block sound from starting before a click, so it cannot auto-play just from opening the page. To change the song, replace `hmm.mp3` with another MP3 (or update the `<audio src="...">` path in `index.html`).
+The song file is `hmm.mp3`. It tries to start when Kinda clicks **Open your surprise**. The visible audio player also has play, pause, volume, and seek controls. Browsers block sound from starting before a click, so it cannot auto-play just from opening the page. To change the song, replace `hmm.mp3` with another MP3 (or update the `<audio src="...">` path in `index.html`).
 
 ## Edit the messages
 
