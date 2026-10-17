@@ -13,11 +13,11 @@ Put your own `.jpg` photos in the `images/` folder using these exact names (lowe
 
 The `images/` folder includes this note. The gallery only has spots for general photos of you two; there are no trip or bus-day photo slots. Replace the filenames in the matching `<img src="...">` in `index.html` if you prefer different names. Keep the image paths relative (for example, `images/us-1.jpg`) so they work both locally and on GitHub Pages. If you do not add photos yet, friendly placeholders appear in their spots.
 
-The tiny instrumental song is synthesized by the page when its play button is clicked. It needs no audio file, external service, or internet connection. Browsers require a click before they allow page audio to play.
+The tiny instrumental song is synthesized by the page and starts when Kinda clicks **Open your surprise**. It needs no audio file, external service, or internet connection. Browsers block sound from starting before a click, so it cannot auto-play just from opening the page.
 
 ## Edit the messages
 
-Open `index.html` in any text editor. Comments in the file point to the apology, photo captions, hidden surprise, and final note. Change the words between the HTML tags while keeping the tags in place. Replace `[add your private joke here]` in the hidden message with your own joke or remove that line.
+Open `index.html` in any text editor. Comments in the file point to the apology, photo captions, hidden surprise, and final note. Change the words between the HTML tags while keeping the tags in place. The private joke is in the hidden message, and the final sign-off currently says `amer`.
 
 ## Upload to GitHub and enable GitHub Pages
 
