@@ -13,7 +13,7 @@ Put your own `.jpg` photos in the `images/` folder using these exact names (lowe
 
 The `images/` folder includes this note. The gallery only has spots for general photos of you two; there are no trip or bus-day photo slots. Replace the filenames in the matching `<img src="...">` in `index.html` if you prefer different names. Keep the image paths relative (for example, `images/us-1.jpg`) so they work both locally and on GitHub Pages. If you do not add photos yet, friendly placeholders appear in their spots.
 
-The tiny instrumental song is synthesized by the page and starts when Kinda clicks **Open your surprise**. It needs no audio file, external service, or internet connection. Browsers block sound from starting before a click, so it cannot auto-play just from opening the page.
+The song file is `hmm.mp3`. It starts when Kinda clicks **Open your surprise**, and the song button can pause or play it again. Browsers block sound from starting before a click, so it cannot auto-play just from opening the page. To change the song, replace `hmm.mp3` with another MP3 (or update the `<audio src="...">` path in `index.html`).
 
 ## Edit the messages
 
@@ -22,7 +22,7 @@ Open `index.html` in any text editor. Comments in the file point to the apology,
 ## Upload to GitHub and enable GitHub Pages
 
 1. Create a new repository on GitHub.
-2. Upload `index.html`, `style.css`, `script.js`, and the `images/` folder to the repository's top level. Include this `README.md` too if you want the instructions visible in the repo.
+2. Upload `index.html`, `style.css`, `script.js`, `README.md`, and the `images/` folder and `hmm.mp3` to the repository's top level. The MP3 must stay at `hmm.mp3` unless you update its path in `index.html`.
 3. In the repository, open **Settings → Pages**.
 4. Under **Build and deployment**, choose **Deploy from a branch**.
 5. Select your main branch and the **/(root)** folder, then click **Save**.

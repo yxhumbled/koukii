@@ -5,9 +5,26 @@ const confettiLayer = document.querySelector('#confetti-layer');
 const openButton = document.querySelector('#open-surprise');
 const songButton = document.querySelector('#song-button');
 const songSection = document.querySelector('.song-section');
-let audioContext;
-let songTimer;
-let songStep = 0;
+const birthdaySong = document.querySelector('#birthday-song');
+const songCaption = document.querySelector('#song-caption');
+
+function updateSongState(isPlaying) {
+  songButton.textContent = isPlaying ? '■ Pause the song' : '▶ Play the song';
+  songButton.setAttribute('aria-pressed', String(isPlaying));
+  songSection.classList.toggle('is-playing', isPlaying);
+}
+
+async function startSong() {
+  try {
+    await birthdaySong.play();
+    updateSongState(true);
+    songCaption.textContent = 'A little soundtrack for your surprise 🎶';
+  } catch (error) {
+    // Some browsers still require a direct tap on the song button to allow playback.
+    updateSongState(false);
+    songCaption.textContent = 'Tap the song button if it didn’t start 🎶';
+  }
+}
 
 // The opening click is the visitor's gesture that lets browsers start the tune.
 openButton.addEventListener('click', () => {
@@ -17,6 +34,22 @@ openButton.addEventListener('click', () => {
   window.setTimeout(() => {
     document.querySelector('#apology').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
+});
+
+// Keep the button and little music doodle in sync with playback.
+birthdaySong.addEventListener('play', () => updateSongState(true));
+birthdaySong.addEventListener('pause', () => updateSongState(false));
+birthdaySong.addEventListener('ended', () => {
+  updateSongState(false);
+  songCaption.textContent = 'That was the song I picked for you 💗';
+});
+
+songButton.addEventListener('click', async () => {
+  if (birthdaySong.paused) {
+    await startSong();
+  } else {
+    birthdaySong.pause();
+  }
 });
 
 // Reveal the note and add a tiny burst of hearts/sparkles. Click again to tuck it away.
@@ -49,58 +82,3 @@ document.querySelectorAll('.photo-frame img').forEach((photo) => {
   if (photo.complete && photo.naturalWidth === 0) showFallback();
 });
 
-// A tiny original melody made with Web Audio, so it works without a hosted music file.
-
-// Note frequencies for a gentle little major-key loop.
-const tune = [523.25, 659.25, 783.99, 659.25, 587.33, 659.25, 523.25, 392.00];
-
-function playNote(frequency, startTime) {
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-  oscillator.type = 'sine';
-  oscillator.frequency.setValueAtTime(frequency, startTime);
-  gain.gain.setValueAtTime(0.0001, startTime);
-  gain.gain.exponentialRampToValueAtTime(0.12, startTime + 0.025);
-  gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.34);
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-  oscillator.start(startTime);
-  oscillator.stop(startTime + 0.36);
-}
-
-function playNextNote() {
-  if (audioContext.state === 'suspended') audioContext.resume();
-  playNote(tune[songStep % tune.length], audioContext.currentTime);
-  songStep += 1;
-  songTimer = window.setTimeout(playNextNote, 390);
-}
-
-async function startSong() {
-  if (songTimer) return;
-  const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-  if (!AudioContextClass) return;
-  audioContext ??= new AudioContextClass();
-  await audioContext.resume();
-  songButton.textContent = '■ Pause the tiny song';
-  songButton.setAttribute('aria-pressed', 'true');
-  songSection.classList.add('is-playing');
-  playNextNote();
-}
-
-songButton.addEventListener('click', async () => {
-  if (songTimer) {
-    window.clearTimeout(songTimer);
-    songTimer = undefined;
-    songButton.textContent = '▶ Play the tiny song';
-    songButton.setAttribute('aria-pressed', 'false');
-    songSection.classList.remove('is-playing');
-    return;
-  }
-
-  if (!(window.AudioContext || window.webkitAudioContext)) {
-    songButton.textContent = 'Song unavailable in this browser';
-    songButton.disabled = true;
-    return;
-  }
-  await startSong();
-});
